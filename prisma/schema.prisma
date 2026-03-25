@@ -1,0 +1,162 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum CampaignStatus {
+  DRAFT
+  ACTIVE
+  ARCHIVED
+}
+
+enum QuestStatus {
+  AVAILABLE
+  ACTIVE
+  COMPLETED
+  FAILED
+}
+
+enum TurnRole {
+  player
+  dm
+  system
+}
+
+model User {
+  id        String     @id
+  createdAt DateTime   @default(now())
+
+  campaigns Campaign[]
+}
+
+model Campaign {
+  id              String         @id @default(cuid())
+  userId          String
+  title           String
+  system          String
+  level           Int
+  aestheticPrompt String
+  tone            String
+  sessionLength   String
+  status          CampaignStatus @default(ACTIVE)
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  world     World?
+  locations Location[]
+  npcs      Npc[]
+  quests    Quest[]
+  sessions  Session[]
+
+  @@index([userId])
+}
+
+model World {
+  id         String   @id @default(cuid())
+  campaignId String   @unique
+  summary    String
+  loreJson   Json
+  themesJson Json
+
+  campaign Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+}
+
+model Location {
+  id           String  @id @default(cuid())
+  campaignId   String
+  name         String
+  description  String
+  secretsJson  Json
+  stateJson    Json
+  isDiscovered Boolean @default(false)
+
+  campaign Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+
+  @@index([campaignId])
+  @@unique([campaignId, name])
+}
+
+model Npc {
+  id                    String @id @default(cuid())
+  campaignId             String
+  name                  String
+  role                  String
+  backstory             String
+  personality           String
+  speechStyle           String
+  goalsJson             Json
+  secretsJson           Json
+  disposition           String
+  relationshipStateJson Json
+
+  campaign Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+
+  @@index([campaignId])
+  @@unique([campaignId, name])
+}
+
+model Quest {
+  id          String     @id @default(cuid())
+  campaignId  String
+  title       String
+  description String
+  status      QuestStatus @default(AVAILABLE)
+  stakes      String
+  stateJson   Json
+  isMain      Boolean    @default(false)
+
+  campaign Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+
+  @@index([campaignId])
+  @@unique([campaignId, title])
+}
+
+model Session {
+  id               String   @id @default(cuid())
+  campaignId       String
+  turnNumber       Int      @default(0)
+  currentSceneId   String?
+  currentObjective String?
+  summary          String   @default("")
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  endedAt          DateTime?
+
+  campaign  Campaign       @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  turns     Turn[]
+  snapshots StateSnapshot[]
+
+  @@index([campaignId])
+}
+
+model Turn {
+  id        String   @id @default(cuid())
+  sessionId String
+  turnIndex Int
+  role      TurnRole
+  content   String
+  createdAt DateTime @default(now())
+
+  session Session @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@index([sessionId])
+  @@unique([sessionId, turnIndex])
+}
+
+model StateSnapshot {
+  id         String   @id @default(cuid())
+  sessionId  String
+  turnNumber Int
+  jsonState  Json
+  createdAt  DateTime @default(now())
+
+  session Session @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@index([sessionId])
+  @@unique([sessionId, turnNumber])
+}
