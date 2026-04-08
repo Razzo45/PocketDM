@@ -58,6 +58,21 @@ export type Session = Prisma.SessionModel
  */
 export type Turn = Prisma.TurnModel
 /**
+ * Model SessionEvent
+ * 
+ */
+export type SessionEvent = Prisma.SessionEventModel
+/**
+ * Model SessionMemoryFact
+ * 
+ */
+export type SessionMemoryFact = Prisma.SessionMemoryFactModel
+/**
+ * Model ProcessedRequest
+ * 
+ */
+export type ProcessedRequest = Prisma.ProcessedRequestModel
+/**
  * Model StateSnapshot
  * 
  */

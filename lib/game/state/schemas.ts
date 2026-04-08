@@ -67,6 +67,14 @@ export const RunDmTurnOutputSchema = z.object({
     npcIds: z.array(z.string()).default([]),
     questIds: z.array(z.string()).default([]),
   }),
+  rollPrompt: z
+    .object({
+      kind: z.literal("d20"),
+      reason: z.string().min(1),
+      stakes: z.string().min(1),
+      promptKey: z.string().min(1),
+    })
+    .optional(),
 });
 
 export type RunDmTurnOutput = z.infer<typeof RunDmTurnOutputSchema>;
@@ -95,6 +103,7 @@ export const StateUpdateSchema = z.object({
       }),
     )
     .default([]),
+  commitmentFacts: z.array(z.string().min(1)).default([]),
 });
 
 export type StateUpdate = z.infer<typeof StateUpdateSchema>;
@@ -117,6 +126,17 @@ export const RuntimeStateSchema = z.object({
   discoveredLore: z.array(z.string()).default([]),
   npcRelationships: z.record(z.string(), z.number().int().min(-10).max(10)).default({}),
   questStages: z.record(z.string(), z.string()).default({}),
+  pinnedFacts: z.array(z.string()).default([]),
+  commitments: z.array(z.string()).default([]),
+  lastRoll: z
+    .object({
+      type: z.literal("d20"),
+      value: z.number().int().min(1).max(20),
+      reason: z.string(),
+      turnNumber: z.number().int().min(0),
+    })
+    .optional(),
+  resolvedRollPromptKeys: z.array(z.string()).default([]),
   currentLocationId: z.string().optional(),
   currentSceneId: z.string().optional(),
 });

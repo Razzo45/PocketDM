@@ -17,3 +17,17 @@ export function buildCompactStateForContext(state: RuntimeState): RuntimeState {
   };
 }
 
+export function buildContextBundle(params: {
+  state: RuntimeState;
+  recentTurns: Array<{ role: "player" | "dm"; content: string }>;
+  pinnedFacts: string[];
+  compactFacts: string[];
+}) {
+  return {
+    state: buildCompactStateForContext(params.state),
+    pinnedFacts: params.pinnedFacts.slice(0, 25),
+    compactFacts: params.compactFacts.slice(0, 25),
+    recentTurns: selectRecentTurnsForContext(params.recentTurns, 10),
+  };
+}
+

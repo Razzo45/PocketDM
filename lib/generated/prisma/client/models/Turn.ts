@@ -58,6 +58,7 @@ export type TurnCountAggregateOutputType = {
   turnIndex: number
   role: number
   content: number
+  metadataJson: number
   createdAt: number
   _all: number
 }
@@ -95,6 +96,7 @@ export type TurnCountAggregateInputType = {
   turnIndex?: true
   role?: true
   content?: true
+  metadataJson?: true
   createdAt?: true
   _all?: true
 }
@@ -191,6 +193,7 @@ export type TurnGroupByOutputType = {
   turnIndex: number
   role: $Enums.TurnRole
   content: string
+  metadataJson: runtime.JsonValue | null
   createdAt: Date
   _count: TurnCountAggregateOutputType | null
   _avg: TurnAvgAggregateOutputType | null
@@ -223,6 +226,7 @@ export type TurnWhereInput = {
   turnIndex?: Prisma.IntFilter<"Turn"> | number
   role?: Prisma.EnumTurnRoleFilter<"Turn"> | $Enums.TurnRole
   content?: Prisma.StringFilter<"Turn"> | string
+  metadataJson?: Prisma.JsonNullableFilter<"Turn">
   createdAt?: Prisma.DateTimeFilter<"Turn"> | Date | string
   session?: Prisma.XOR<Prisma.SessionScalarRelationFilter, Prisma.SessionWhereInput>
 }
@@ -233,6 +237,7 @@ export type TurnOrderByWithRelationInput = {
   turnIndex?: Prisma.SortOrder
   role?: Prisma.SortOrder
   content?: Prisma.SortOrder
+  metadataJson?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   session?: Prisma.SessionOrderByWithRelationInput
 }
@@ -247,6 +252,7 @@ export type TurnWhereUniqueInput = Prisma.AtLeast<{
   turnIndex?: Prisma.IntFilter<"Turn"> | number
   role?: Prisma.EnumTurnRoleFilter<"Turn"> | $Enums.TurnRole
   content?: Prisma.StringFilter<"Turn"> | string
+  metadataJson?: Prisma.JsonNullableFilter<"Turn">
   createdAt?: Prisma.DateTimeFilter<"Turn"> | Date | string
   session?: Prisma.XOR<Prisma.SessionScalarRelationFilter, Prisma.SessionWhereInput>
 }, "id" | "sessionId_turnIndex">
@@ -257,6 +263,7 @@ export type TurnOrderByWithAggregationInput = {
   turnIndex?: Prisma.SortOrder
   role?: Prisma.SortOrder
   content?: Prisma.SortOrder
+  metadataJson?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.TurnCountOrderByAggregateInput
   _avg?: Prisma.TurnAvgOrderByAggregateInput
@@ -274,6 +281,7 @@ export type TurnScalarWhereWithAggregatesInput = {
   turnIndex?: Prisma.IntWithAggregatesFilter<"Turn"> | number
   role?: Prisma.EnumTurnRoleWithAggregatesFilter<"Turn"> | $Enums.TurnRole
   content?: Prisma.StringWithAggregatesFilter<"Turn"> | string
+  metadataJson?: Prisma.JsonNullableWithAggregatesFilter<"Turn">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Turn"> | Date | string
 }
 
@@ -282,6 +290,7 @@ export type TurnCreateInput = {
   turnIndex: number
   role: $Enums.TurnRole
   content: string
+  metadataJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   session: Prisma.SessionCreateNestedOneWithoutTurnsInput
 }
@@ -292,6 +301,7 @@ export type TurnUncheckedCreateInput = {
   turnIndex: number
   role: $Enums.TurnRole
   content: string
+  metadataJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
 }
 
@@ -300,6 +310,7 @@ export type TurnUpdateInput = {
   turnIndex?: Prisma.IntFieldUpdateOperationsInput | number
   role?: Prisma.EnumTurnRoleFieldUpdateOperationsInput | $Enums.TurnRole
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  metadataJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   session?: Prisma.SessionUpdateOneRequiredWithoutTurnsNestedInput
 }
@@ -310,6 +321,7 @@ export type TurnUncheckedUpdateInput = {
   turnIndex?: Prisma.IntFieldUpdateOperationsInput | number
   role?: Prisma.EnumTurnRoleFieldUpdateOperationsInput | $Enums.TurnRole
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  metadataJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -319,6 +331,7 @@ export type TurnCreateManyInput = {
   turnIndex: number
   role: $Enums.TurnRole
   content: string
+  metadataJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
 }
 
@@ -327,6 +340,7 @@ export type TurnUpdateManyMutationInput = {
   turnIndex?: Prisma.IntFieldUpdateOperationsInput | number
   role?: Prisma.EnumTurnRoleFieldUpdateOperationsInput | $Enums.TurnRole
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  metadataJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -336,6 +350,7 @@ export type TurnUncheckedUpdateManyInput = {
   turnIndex?: Prisma.IntFieldUpdateOperationsInput | number
   role?: Prisma.EnumTurnRoleFieldUpdateOperationsInput | $Enums.TurnRole
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  metadataJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -360,6 +375,7 @@ export type TurnCountOrderByAggregateInput = {
   turnIndex?: Prisma.SortOrder
   role?: Prisma.SortOrder
   content?: Prisma.SortOrder
+  metadataJson?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -440,6 +456,7 @@ export type TurnCreateWithoutSessionInput = {
   turnIndex: number
   role: $Enums.TurnRole
   content: string
+  metadataJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
 }
 
@@ -448,6 +465,7 @@ export type TurnUncheckedCreateWithoutSessionInput = {
   turnIndex: number
   role: $Enums.TurnRole
   content: string
+  metadataJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
 }
 
@@ -486,6 +504,7 @@ export type TurnScalarWhereInput = {
   turnIndex?: Prisma.IntFilter<"Turn"> | number
   role?: Prisma.EnumTurnRoleFilter<"Turn"> | $Enums.TurnRole
   content?: Prisma.StringFilter<"Turn"> | string
+  metadataJson?: Prisma.JsonNullableFilter<"Turn">
   createdAt?: Prisma.DateTimeFilter<"Turn"> | Date | string
 }
 
@@ -494,6 +513,7 @@ export type TurnCreateManySessionInput = {
   turnIndex: number
   role: $Enums.TurnRole
   content: string
+  metadataJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
 }
 
@@ -502,6 +522,7 @@ export type TurnUpdateWithoutSessionInput = {
   turnIndex?: Prisma.IntFieldUpdateOperationsInput | number
   role?: Prisma.EnumTurnRoleFieldUpdateOperationsInput | $Enums.TurnRole
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  metadataJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -510,6 +531,7 @@ export type TurnUncheckedUpdateWithoutSessionInput = {
   turnIndex?: Prisma.IntFieldUpdateOperationsInput | number
   role?: Prisma.EnumTurnRoleFieldUpdateOperationsInput | $Enums.TurnRole
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  metadataJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -518,6 +540,7 @@ export type TurnUncheckedUpdateManyWithoutSessionInput = {
   turnIndex?: Prisma.IntFieldUpdateOperationsInput | number
   role?: Prisma.EnumTurnRoleFieldUpdateOperationsInput | $Enums.TurnRole
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  metadataJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -529,6 +552,7 @@ export type TurnSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   turnIndex?: boolean
   role?: boolean
   content?: boolean
+  metadataJson?: boolean
   createdAt?: boolean
   session?: boolean | Prisma.SessionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["turn"]>
@@ -539,6 +563,7 @@ export type TurnSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   turnIndex?: boolean
   role?: boolean
   content?: boolean
+  metadataJson?: boolean
   createdAt?: boolean
   session?: boolean | Prisma.SessionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["turn"]>
@@ -549,6 +574,7 @@ export type TurnSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   turnIndex?: boolean
   role?: boolean
   content?: boolean
+  metadataJson?: boolean
   createdAt?: boolean
   session?: boolean | Prisma.SessionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["turn"]>
@@ -559,10 +585,11 @@ export type TurnSelectScalar = {
   turnIndex?: boolean
   role?: boolean
   content?: boolean
+  metadataJson?: boolean
   createdAt?: boolean
 }
 
-export type TurnOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sessionId" | "turnIndex" | "role" | "content" | "createdAt", ExtArgs["result"]["turn"]>
+export type TurnOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sessionId" | "turnIndex" | "role" | "content" | "metadataJson" | "createdAt", ExtArgs["result"]["turn"]>
 export type TurnInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   session?: boolean | Prisma.SessionDefaultArgs<ExtArgs>
 }
@@ -584,6 +611,7 @@ export type $TurnPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     turnIndex: number
     role: $Enums.TurnRole
     content: string
+    metadataJson: runtime.JsonValue | null
     createdAt: Date
   }, ExtArgs["result"]["turn"]>
   composites: {}
@@ -1014,6 +1042,7 @@ export interface TurnFieldRefs {
   readonly turnIndex: Prisma.FieldRef<"Turn", 'Int'>
   readonly role: Prisma.FieldRef<"Turn", 'TurnRole'>
   readonly content: Prisma.FieldRef<"Turn", 'String'>
+  readonly metadataJson: Prisma.FieldRef<"Turn", 'Json'>
   readonly createdAt: Prisma.FieldRef<"Turn", 'DateTime'>
 }
     

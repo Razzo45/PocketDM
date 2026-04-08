@@ -24,6 +24,8 @@ export async function GET(req: Request) {
         },
         turns: { orderBy: { turnIndex: "asc" }, take: 60 },
         snapshots: { orderBy: { turnNumber: "desc" }, take: 1 },
+        memory: { where: { isActive: true }, orderBy: { updatedAt: "desc" }, take: 80 },
+        events: { orderBy: { createdAt: "desc" }, take: 60 },
       },
     });
 
@@ -52,6 +54,8 @@ export async function GET(req: Request) {
       quests: session.campaign.quests,
       turns: session.turns,
       snapshot: session.snapshots[0] ?? null,
+      memoryFacts: session.memory,
+      events: session.events,
     });
   } catch (err: any) {
     return NextResponse.json({ error: err?.message ?? "Unknown error" }, { status: 400 });

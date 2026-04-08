@@ -31,8 +31,13 @@ function buildPrompt(input: ExtractStateUpdateInput): ChatMessage[] {
           inventoryRemove: ["string"],
           npcRelationshipDeltas: [{ npcId: "string", delta: "int(-5..5)", note: "string" }],
           questStageUpdates: [{ questId: "string", newStage: "string", status: "AVAILABLE|ACTIVE|COMPLETED|FAILED?" }],
+          commitmentFacts: ["string"],
         },
-        hardRules: ["If uncertain, omit the field rather than guessing.", "Never remove inventory unless explicitly lost/spent."],
+        hardRules: [
+          "If uncertain, omit the field rather than guessing.",
+          "Never remove inventory unless explicitly lost/spent.",
+          "Capture explicit promises, debts, deadlines, and callbacks in commitmentFacts.",
+        ],
       }),
     },
   ];

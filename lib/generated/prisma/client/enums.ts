@@ -35,3 +35,25 @@ export const TurnRole = {
 } as const
 
 export type TurnRole = (typeof TurnRole)[keyof typeof TurnRole]
+
+
+export const SessionEventType = {
+  ROLL_RESOLVED: 'ROLL_RESOLVED',
+  QUEST_STAGE_ADVANCED: 'QUEST_STAGE_ADVANCED',
+  NPC_RELATION_CHANGED: 'NPC_RELATION_CHANGED',
+  ITEM_ADDED: 'ITEM_ADDED',
+  ITEM_REMOVED: 'ITEM_REMOVED',
+  LORE_DISCOVERED: 'LORE_DISCOVERED',
+  COMMITMENT_RECORDED: 'COMMITMENT_RECORDED'
+} as const
+
+export type SessionEventType = (typeof SessionEventType)[keyof typeof SessionEventType]
+
+
+export const MemoryFactType = {
+  PINNED: 'PINNED',
+  COMPACT: 'COMPACT',
+  COMMITMENT: 'COMMITMENT'
+} as const
+
+export type MemoryFactType = (typeof MemoryFactType)[keyof typeof MemoryFactType]

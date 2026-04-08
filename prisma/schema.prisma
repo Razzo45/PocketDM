@@ -26,6 +26,22 @@ enum TurnRole {
   system
 }
 
+enum SessionEventType {
+  ROLL_RESOLVED
+  QUEST_STAGE_ADVANCED
+  NPC_RELATION_CHANGED
+  ITEM_ADDED
+  ITEM_REMOVED
+  LORE_DISCOVERED
+  COMMITMENT_RECORDED
+}
+
+enum MemoryFactType {
+  PINNED
+  COMPACT
+  COMMITMENT
+}
+
 model User {
   id        String     @id
   createdAt DateTime   @default(now())
@@ -120,6 +136,7 @@ model Session {
   id               String   @id @default(cuid())
   campaignId       String
   turnNumber       Int      @default(0)
+  snapshotVersion  Int      @default(0)
   currentSceneId   String?
   currentObjective String?
   summary          String   @default("")
@@ -130,6 +147,9 @@ model Session {
   campaign  Campaign       @relation(fields: [campaignId], references: [id], onDelete: Cascade)
   turns     Turn[]
   snapshots StateSnapshot[]
+  events    SessionEvent[]
+  memory    SessionMemoryFact[]
+  requests  ProcessedRequest[]
 
   @@index([campaignId])
 }
@@ -140,12 +160,56 @@ model Turn {
   turnIndex Int
   role      TurnRole
   content   String
+  metadataJson Json?
   createdAt DateTime @default(now())
 
   session Session @relation(fields: [sessionId], references: [id], onDelete: Cascade)
 
   @@index([sessionId])
   @@unique([sessionId, turnIndex])
+}
+
+model SessionEvent {
+  id         String           @id @default(cuid())
+  sessionId  String
+  turnNumber Int
+  type       SessionEventType
+  payloadJson Json
+  createdAt  DateTime         @default(now())
+
+  session Session @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@index([sessionId, turnNumber])
+}
+
+model SessionMemoryFact {
+  id         String         @id @default(cuid())
+  sessionId  String
+  type       MemoryFactType
+  fact       String
+  entityType String?
+  entityId   String?
+  isActive   Boolean        @default(true)
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+
+  session Session @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@index([sessionId, type, isActive])
+}
+
+model ProcessedRequest {
+  id             String   @id @default(cuid())
+  sessionId      String
+  route          String
+  idempotencyKey String
+  responseJson   Json
+  createdAt      DateTime @default(now())
+
+  session Session @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@unique([sessionId, route, idempotencyKey])
+  @@index([sessionId, route])
 }
 
 model StateSnapshot {

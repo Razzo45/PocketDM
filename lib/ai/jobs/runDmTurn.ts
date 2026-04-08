@@ -12,6 +12,12 @@ export type RunDmTurnInput = {
   activeQuests: Array<{ id: string; title: string; stage: string; stakes: string; isMain: boolean }>;
   recentTurns: Array<{ role: "player" | "dm"; content: string }>;
   state: RuntimeState;
+  pinnedFacts?: string[];
+  rollContext?: {
+    promptKey: string;
+    reason: string;
+    value: number;
+  };
 };
 
 function buildPrompt(input: RunDmTurnInput): ChatMessage[] {
@@ -31,12 +37,19 @@ function buildPrompt(input: RunDmTurnInput): ChatMessage[] {
           maxActiveNpcInScene: 3,
           noRetcons: true,
           noNewMajorLore: true,
+          d20Only: true,
+          rollPromptPolicy: "Only suggest when chance meaningfully affects outcome",
         },
         context: input,
         outputShape: {
           dmMessage: "string",
           spotlight: { locationId: "string?", npcIds: ["string"], questIds: ["string"] },
+          rollPrompt: { kind: "\"d20\"", reason: "string", stakes: "string", promptKey: "string" },
         },
+        hardRules: [
+          "If rollContext is present, narrate outcome from that roll and do not request another roll for same action.",
+          "Never require more than one pending roll at a time.",
+        ],
       }),
     },
   ];

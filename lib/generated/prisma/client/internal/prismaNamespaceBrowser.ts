@@ -59,6 +59,9 @@ export const ModelName = {
   Quest: 'Quest',
   Session: 'Session',
   Turn: 'Turn',
+  SessionEvent: 'SessionEvent',
+  SessionMemoryFact: 'SessionMemoryFact',
+  ProcessedRequest: 'ProcessedRequest',
   StateSnapshot: 'StateSnapshot'
 } as const
 
@@ -162,6 +165,7 @@ export const SessionScalarFieldEnum = {
   id: 'id',
   campaignId: 'campaignId',
   turnNumber: 'turnNumber',
+  snapshotVersion: 'snapshotVersion',
   currentSceneId: 'currentSceneId',
   currentObjective: 'currentObjective',
   summary: 'summary',
@@ -179,10 +183,50 @@ export const TurnScalarFieldEnum = {
   turnIndex: 'turnIndex',
   role: 'role',
   content: 'content',
+  metadataJson: 'metadataJson',
   createdAt: 'createdAt'
 } as const
 
 export type TurnScalarFieldEnum = (typeof TurnScalarFieldEnum)[keyof typeof TurnScalarFieldEnum]
+
+
+export const SessionEventScalarFieldEnum = {
+  id: 'id',
+  sessionId: 'sessionId',
+  turnNumber: 'turnNumber',
+  type: 'type',
+  payloadJson: 'payloadJson',
+  createdAt: 'createdAt'
+} as const
+
+export type SessionEventScalarFieldEnum = (typeof SessionEventScalarFieldEnum)[keyof typeof SessionEventScalarFieldEnum]
+
+
+export const SessionMemoryFactScalarFieldEnum = {
+  id: 'id',
+  sessionId: 'sessionId',
+  type: 'type',
+  fact: 'fact',
+  entityType: 'entityType',
+  entityId: 'entityId',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SessionMemoryFactScalarFieldEnum = (typeof SessionMemoryFactScalarFieldEnum)[keyof typeof SessionMemoryFactScalarFieldEnum]
+
+
+export const ProcessedRequestScalarFieldEnum = {
+  id: 'id',
+  sessionId: 'sessionId',
+  route: 'route',
+  idempotencyKey: 'idempotencyKey',
+  responseJson: 'responseJson',
+  createdAt: 'createdAt'
+} as const
+
+export type ProcessedRequestScalarFieldEnum = (typeof ProcessedRequestScalarFieldEnum)[keyof typeof ProcessedRequestScalarFieldEnum]
 
 
 export const StateSnapshotScalarFieldEnum = {
@@ -209,6 +253,14 @@ export const JsonNullValueInput = {
 } as const
 
 export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const QueryMode = {

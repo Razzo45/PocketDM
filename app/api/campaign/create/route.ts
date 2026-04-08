@@ -85,6 +85,9 @@ export async function POST(req: Request) {
       discoveredLore: [],
       npcRelationships: {},
       questStages,
+      pinnedFacts: [],
+      commitments: [],
+      resolvedRollPromptKeys: [],
       currentLocationId: packet.openingScene.locationId,
       currentSceneId: packet.openingScene.sceneId,
     });

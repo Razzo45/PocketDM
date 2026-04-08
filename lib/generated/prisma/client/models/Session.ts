@@ -28,16 +28,19 @@ export type AggregateSession = {
 
 export type SessionAvgAggregateOutputType = {
   turnNumber: number | null
+  snapshotVersion: number | null
 }
 
 export type SessionSumAggregateOutputType = {
   turnNumber: number | null
+  snapshotVersion: number | null
 }
 
 export type SessionMinAggregateOutputType = {
   id: string | null
   campaignId: string | null
   turnNumber: number | null
+  snapshotVersion: number | null
   currentSceneId: string | null
   currentObjective: string | null
   summary: string | null
@@ -50,6 +53,7 @@ export type SessionMaxAggregateOutputType = {
   id: string | null
   campaignId: string | null
   turnNumber: number | null
+  snapshotVersion: number | null
   currentSceneId: string | null
   currentObjective: string | null
   summary: string | null
@@ -62,6 +66,7 @@ export type SessionCountAggregateOutputType = {
   id: number
   campaignId: number
   turnNumber: number
+  snapshotVersion: number
   currentSceneId: number
   currentObjective: number
   summary: number
@@ -74,16 +79,19 @@ export type SessionCountAggregateOutputType = {
 
 export type SessionAvgAggregateInputType = {
   turnNumber?: true
+  snapshotVersion?: true
 }
 
 export type SessionSumAggregateInputType = {
   turnNumber?: true
+  snapshotVersion?: true
 }
 
 export type SessionMinAggregateInputType = {
   id?: true
   campaignId?: true
   turnNumber?: true
+  snapshotVersion?: true
   currentSceneId?: true
   currentObjective?: true
   summary?: true
@@ -96,6 +104,7 @@ export type SessionMaxAggregateInputType = {
   id?: true
   campaignId?: true
   turnNumber?: true
+  snapshotVersion?: true
   currentSceneId?: true
   currentObjective?: true
   summary?: true
@@ -108,6 +117,7 @@ export type SessionCountAggregateInputType = {
   id?: true
   campaignId?: true
   turnNumber?: true
+  snapshotVersion?: true
   currentSceneId?: true
   currentObjective?: true
   summary?: true
@@ -207,6 +217,7 @@ export type SessionGroupByOutputType = {
   id: string
   campaignId: string
   turnNumber: number
+  snapshotVersion: number
   currentSceneId: string | null
   currentObjective: string | null
   summary: string
@@ -242,6 +253,7 @@ export type SessionWhereInput = {
   id?: Prisma.StringFilter<"Session"> | string
   campaignId?: Prisma.StringFilter<"Session"> | string
   turnNumber?: Prisma.IntFilter<"Session"> | number
+  snapshotVersion?: Prisma.IntFilter<"Session"> | number
   currentSceneId?: Prisma.StringNullableFilter<"Session"> | string | null
   currentObjective?: Prisma.StringNullableFilter<"Session"> | string | null
   summary?: Prisma.StringFilter<"Session"> | string
@@ -251,12 +263,16 @@ export type SessionWhereInput = {
   campaign?: Prisma.XOR<Prisma.CampaignScalarRelationFilter, Prisma.CampaignWhereInput>
   turns?: Prisma.TurnListRelationFilter
   snapshots?: Prisma.StateSnapshotListRelationFilter
+  events?: Prisma.SessionEventListRelationFilter
+  memory?: Prisma.SessionMemoryFactListRelationFilter
+  requests?: Prisma.ProcessedRequestListRelationFilter
 }
 
 export type SessionOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   campaignId?: Prisma.SortOrder
   turnNumber?: Prisma.SortOrder
+  snapshotVersion?: Prisma.SortOrder
   currentSceneId?: Prisma.SortOrderInput | Prisma.SortOrder
   currentObjective?: Prisma.SortOrderInput | Prisma.SortOrder
   summary?: Prisma.SortOrder
@@ -266,6 +282,9 @@ export type SessionOrderByWithRelationInput = {
   campaign?: Prisma.CampaignOrderByWithRelationInput
   turns?: Prisma.TurnOrderByRelationAggregateInput
   snapshots?: Prisma.StateSnapshotOrderByRelationAggregateInput
+  events?: Prisma.SessionEventOrderByRelationAggregateInput
+  memory?: Prisma.SessionMemoryFactOrderByRelationAggregateInput
+  requests?: Prisma.ProcessedRequestOrderByRelationAggregateInput
 }
 
 export type SessionWhereUniqueInput = Prisma.AtLeast<{
@@ -275,6 +294,7 @@ export type SessionWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.SessionWhereInput | Prisma.SessionWhereInput[]
   campaignId?: Prisma.StringFilter<"Session"> | string
   turnNumber?: Prisma.IntFilter<"Session"> | number
+  snapshotVersion?: Prisma.IntFilter<"Session"> | number
   currentSceneId?: Prisma.StringNullableFilter<"Session"> | string | null
   currentObjective?: Prisma.StringNullableFilter<"Session"> | string | null
   summary?: Prisma.StringFilter<"Session"> | string
@@ -284,12 +304,16 @@ export type SessionWhereUniqueInput = Prisma.AtLeast<{
   campaign?: Prisma.XOR<Prisma.CampaignScalarRelationFilter, Prisma.CampaignWhereInput>
   turns?: Prisma.TurnListRelationFilter
   snapshots?: Prisma.StateSnapshotListRelationFilter
+  events?: Prisma.SessionEventListRelationFilter
+  memory?: Prisma.SessionMemoryFactListRelationFilter
+  requests?: Prisma.ProcessedRequestListRelationFilter
 }, "id">
 
 export type SessionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   campaignId?: Prisma.SortOrder
   turnNumber?: Prisma.SortOrder
+  snapshotVersion?: Prisma.SortOrder
   currentSceneId?: Prisma.SortOrderInput | Prisma.SortOrder
   currentObjective?: Prisma.SortOrderInput | Prisma.SortOrder
   summary?: Prisma.SortOrder
@@ -310,6 +334,7 @@ export type SessionScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Session"> | string
   campaignId?: Prisma.StringWithAggregatesFilter<"Session"> | string
   turnNumber?: Prisma.IntWithAggregatesFilter<"Session"> | number
+  snapshotVersion?: Prisma.IntWithAggregatesFilter<"Session"> | number
   currentSceneId?: Prisma.StringNullableWithAggregatesFilter<"Session"> | string | null
   currentObjective?: Prisma.StringNullableWithAggregatesFilter<"Session"> | string | null
   summary?: Prisma.StringWithAggregatesFilter<"Session"> | string
@@ -321,6 +346,7 @@ export type SessionScalarWhereWithAggregatesInput = {
 export type SessionCreateInput = {
   id?: string
   turnNumber?: number
+  snapshotVersion?: number
   currentSceneId?: string | null
   currentObjective?: string | null
   summary?: string
@@ -330,12 +356,16 @@ export type SessionCreateInput = {
   campaign: Prisma.CampaignCreateNestedOneWithoutSessionsInput
   turns?: Prisma.TurnCreateNestedManyWithoutSessionInput
   snapshots?: Prisma.StateSnapshotCreateNestedManyWithoutSessionInput
+  events?: Prisma.SessionEventCreateNestedManyWithoutSessionInput
+  memory?: Prisma.SessionMemoryFactCreateNestedManyWithoutSessionInput
+  requests?: Prisma.ProcessedRequestCreateNestedManyWithoutSessionInput
 }
 
 export type SessionUncheckedCreateInput = {
   id?: string
   campaignId: string
   turnNumber?: number
+  snapshotVersion?: number
   currentSceneId?: string | null
   currentObjective?: string | null
   summary?: string
@@ -344,11 +374,15 @@ export type SessionUncheckedCreateInput = {
   endedAt?: Date | string | null
   turns?: Prisma.TurnUncheckedCreateNestedManyWithoutSessionInput
   snapshots?: Prisma.StateSnapshotUncheckedCreateNestedManyWithoutSessionInput
+  events?: Prisma.SessionEventUncheckedCreateNestedManyWithoutSessionInput
+  memory?: Prisma.SessionMemoryFactUncheckedCreateNestedManyWithoutSessionInput
+  requests?: Prisma.ProcessedRequestUncheckedCreateNestedManyWithoutSessionInput
 }
 
 export type SessionUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   turnNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshotVersion?: Prisma.IntFieldUpdateOperationsInput | number
   currentSceneId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currentObjective?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   summary?: Prisma.StringFieldUpdateOperationsInput | string
@@ -358,12 +392,16 @@ export type SessionUpdateInput = {
   campaign?: Prisma.CampaignUpdateOneRequiredWithoutSessionsNestedInput
   turns?: Prisma.TurnUpdateManyWithoutSessionNestedInput
   snapshots?: Prisma.StateSnapshotUpdateManyWithoutSessionNestedInput
+  events?: Prisma.SessionEventUpdateManyWithoutSessionNestedInput
+  memory?: Prisma.SessionMemoryFactUpdateManyWithoutSessionNestedInput
+  requests?: Prisma.ProcessedRequestUpdateManyWithoutSessionNestedInput
 }
 
 export type SessionUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   campaignId?: Prisma.StringFieldUpdateOperationsInput | string
   turnNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshotVersion?: Prisma.IntFieldUpdateOperationsInput | number
   currentSceneId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currentObjective?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   summary?: Prisma.StringFieldUpdateOperationsInput | string
@@ -372,12 +410,16 @@ export type SessionUncheckedUpdateInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   turns?: Prisma.TurnUncheckedUpdateManyWithoutSessionNestedInput
   snapshots?: Prisma.StateSnapshotUncheckedUpdateManyWithoutSessionNestedInput
+  events?: Prisma.SessionEventUncheckedUpdateManyWithoutSessionNestedInput
+  memory?: Prisma.SessionMemoryFactUncheckedUpdateManyWithoutSessionNestedInput
+  requests?: Prisma.ProcessedRequestUncheckedUpdateManyWithoutSessionNestedInput
 }
 
 export type SessionCreateManyInput = {
   id?: string
   campaignId: string
   turnNumber?: number
+  snapshotVersion?: number
   currentSceneId?: string | null
   currentObjective?: string | null
   summary?: string
@@ -389,6 +431,7 @@ export type SessionCreateManyInput = {
 export type SessionUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   turnNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshotVersion?: Prisma.IntFieldUpdateOperationsInput | number
   currentSceneId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currentObjective?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   summary?: Prisma.StringFieldUpdateOperationsInput | string
@@ -401,6 +444,7 @@ export type SessionUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   campaignId?: Prisma.StringFieldUpdateOperationsInput | string
   turnNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshotVersion?: Prisma.IntFieldUpdateOperationsInput | number
   currentSceneId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currentObjective?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   summary?: Prisma.StringFieldUpdateOperationsInput | string
@@ -423,6 +467,7 @@ export type SessionCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   campaignId?: Prisma.SortOrder
   turnNumber?: Prisma.SortOrder
+  snapshotVersion?: Prisma.SortOrder
   currentSceneId?: Prisma.SortOrder
   currentObjective?: Prisma.SortOrder
   summary?: Prisma.SortOrder
@@ -433,12 +478,14 @@ export type SessionCountOrderByAggregateInput = {
 
 export type SessionAvgOrderByAggregateInput = {
   turnNumber?: Prisma.SortOrder
+  snapshotVersion?: Prisma.SortOrder
 }
 
 export type SessionMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   campaignId?: Prisma.SortOrder
   turnNumber?: Prisma.SortOrder
+  snapshotVersion?: Prisma.SortOrder
   currentSceneId?: Prisma.SortOrder
   currentObjective?: Prisma.SortOrder
   summary?: Prisma.SortOrder
@@ -451,6 +498,7 @@ export type SessionMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   campaignId?: Prisma.SortOrder
   turnNumber?: Prisma.SortOrder
+  snapshotVersion?: Prisma.SortOrder
   currentSceneId?: Prisma.SortOrder
   currentObjective?: Prisma.SortOrder
   summary?: Prisma.SortOrder
@@ -461,6 +509,7 @@ export type SessionMinOrderByAggregateInput = {
 
 export type SessionSumOrderByAggregateInput = {
   turnNumber?: Prisma.SortOrder
+  snapshotVersion?: Prisma.SortOrder
 }
 
 export type SessionScalarRelationFilter = {
@@ -532,6 +581,48 @@ export type SessionUpdateOneRequiredWithoutTurnsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.SessionUpdateToOneWithWhereWithoutTurnsInput, Prisma.SessionUpdateWithoutTurnsInput>, Prisma.SessionUncheckedUpdateWithoutTurnsInput>
 }
 
+export type SessionCreateNestedOneWithoutEventsInput = {
+  create?: Prisma.XOR<Prisma.SessionCreateWithoutEventsInput, Prisma.SessionUncheckedCreateWithoutEventsInput>
+  connectOrCreate?: Prisma.SessionCreateOrConnectWithoutEventsInput
+  connect?: Prisma.SessionWhereUniqueInput
+}
+
+export type SessionUpdateOneRequiredWithoutEventsNestedInput = {
+  create?: Prisma.XOR<Prisma.SessionCreateWithoutEventsInput, Prisma.SessionUncheckedCreateWithoutEventsInput>
+  connectOrCreate?: Prisma.SessionCreateOrConnectWithoutEventsInput
+  upsert?: Prisma.SessionUpsertWithoutEventsInput
+  connect?: Prisma.SessionWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SessionUpdateToOneWithWhereWithoutEventsInput, Prisma.SessionUpdateWithoutEventsInput>, Prisma.SessionUncheckedUpdateWithoutEventsInput>
+}
+
+export type SessionCreateNestedOneWithoutMemoryInput = {
+  create?: Prisma.XOR<Prisma.SessionCreateWithoutMemoryInput, Prisma.SessionUncheckedCreateWithoutMemoryInput>
+  connectOrCreate?: Prisma.SessionCreateOrConnectWithoutMemoryInput
+  connect?: Prisma.SessionWhereUniqueInput
+}
+
+export type SessionUpdateOneRequiredWithoutMemoryNestedInput = {
+  create?: Prisma.XOR<Prisma.SessionCreateWithoutMemoryInput, Prisma.SessionUncheckedCreateWithoutMemoryInput>
+  connectOrCreate?: Prisma.SessionCreateOrConnectWithoutMemoryInput
+  upsert?: Prisma.SessionUpsertWithoutMemoryInput
+  connect?: Prisma.SessionWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SessionUpdateToOneWithWhereWithoutMemoryInput, Prisma.SessionUpdateWithoutMemoryInput>, Prisma.SessionUncheckedUpdateWithoutMemoryInput>
+}
+
+export type SessionCreateNestedOneWithoutRequestsInput = {
+  create?: Prisma.XOR<Prisma.SessionCreateWithoutRequestsInput, Prisma.SessionUncheckedCreateWithoutRequestsInput>
+  connectOrCreate?: Prisma.SessionCreateOrConnectWithoutRequestsInput
+  connect?: Prisma.SessionWhereUniqueInput
+}
+
+export type SessionUpdateOneRequiredWithoutRequestsNestedInput = {
+  create?: Prisma.XOR<Prisma.SessionCreateWithoutRequestsInput, Prisma.SessionUncheckedCreateWithoutRequestsInput>
+  connectOrCreate?: Prisma.SessionCreateOrConnectWithoutRequestsInput
+  upsert?: Prisma.SessionUpsertWithoutRequestsInput
+  connect?: Prisma.SessionWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SessionUpdateToOneWithWhereWithoutRequestsInput, Prisma.SessionUpdateWithoutRequestsInput>, Prisma.SessionUncheckedUpdateWithoutRequestsInput>
+}
+
 export type SessionCreateNestedOneWithoutSnapshotsInput = {
   create?: Prisma.XOR<Prisma.SessionCreateWithoutSnapshotsInput, Prisma.SessionUncheckedCreateWithoutSnapshotsInput>
   connectOrCreate?: Prisma.SessionCreateOrConnectWithoutSnapshotsInput
@@ -549,6 +640,7 @@ export type SessionUpdateOneRequiredWithoutSnapshotsNestedInput = {
 export type SessionCreateWithoutCampaignInput = {
   id?: string
   turnNumber?: number
+  snapshotVersion?: number
   currentSceneId?: string | null
   currentObjective?: string | null
   summary?: string
@@ -557,11 +649,15 @@ export type SessionCreateWithoutCampaignInput = {
   endedAt?: Date | string | null
   turns?: Prisma.TurnCreateNestedManyWithoutSessionInput
   snapshots?: Prisma.StateSnapshotCreateNestedManyWithoutSessionInput
+  events?: Prisma.SessionEventCreateNestedManyWithoutSessionInput
+  memory?: Prisma.SessionMemoryFactCreateNestedManyWithoutSessionInput
+  requests?: Prisma.ProcessedRequestCreateNestedManyWithoutSessionInput
 }
 
 export type SessionUncheckedCreateWithoutCampaignInput = {
   id?: string
   turnNumber?: number
+  snapshotVersion?: number
   currentSceneId?: string | null
   currentObjective?: string | null
   summary?: string
@@ -570,6 +666,9 @@ export type SessionUncheckedCreateWithoutCampaignInput = {
   endedAt?: Date | string | null
   turns?: Prisma.TurnUncheckedCreateNestedManyWithoutSessionInput
   snapshots?: Prisma.StateSnapshotUncheckedCreateNestedManyWithoutSessionInput
+  events?: Prisma.SessionEventUncheckedCreateNestedManyWithoutSessionInput
+  memory?: Prisma.SessionMemoryFactUncheckedCreateNestedManyWithoutSessionInput
+  requests?: Prisma.ProcessedRequestUncheckedCreateNestedManyWithoutSessionInput
 }
 
 export type SessionCreateOrConnectWithoutCampaignInput = {
@@ -605,6 +704,7 @@ export type SessionScalarWhereInput = {
   id?: Prisma.StringFilter<"Session"> | string
   campaignId?: Prisma.StringFilter<"Session"> | string
   turnNumber?: Prisma.IntFilter<"Session"> | number
+  snapshotVersion?: Prisma.IntFilter<"Session"> | number
   currentSceneId?: Prisma.StringNullableFilter<"Session"> | string | null
   currentObjective?: Prisma.StringNullableFilter<"Session"> | string | null
   summary?: Prisma.StringFilter<"Session"> | string
@@ -616,6 +716,7 @@ export type SessionScalarWhereInput = {
 export type SessionCreateWithoutTurnsInput = {
   id?: string
   turnNumber?: number
+  snapshotVersion?: number
   currentSceneId?: string | null
   currentObjective?: string | null
   summary?: string
@@ -624,12 +725,16 @@ export type SessionCreateWithoutTurnsInput = {
   endedAt?: Date | string | null
   campaign: Prisma.CampaignCreateNestedOneWithoutSessionsInput
   snapshots?: Prisma.StateSnapshotCreateNestedManyWithoutSessionInput
+  events?: Prisma.SessionEventCreateNestedManyWithoutSessionInput
+  memory?: Prisma.SessionMemoryFactCreateNestedManyWithoutSessionInput
+  requests?: Prisma.ProcessedRequestCreateNestedManyWithoutSessionInput
 }
 
 export type SessionUncheckedCreateWithoutTurnsInput = {
   id?: string
   campaignId: string
   turnNumber?: number
+  snapshotVersion?: number
   currentSceneId?: string | null
   currentObjective?: string | null
   summary?: string
@@ -637,6 +742,9 @@ export type SessionUncheckedCreateWithoutTurnsInput = {
   updatedAt?: Date | string
   endedAt?: Date | string | null
   snapshots?: Prisma.StateSnapshotUncheckedCreateNestedManyWithoutSessionInput
+  events?: Prisma.SessionEventUncheckedCreateNestedManyWithoutSessionInput
+  memory?: Prisma.SessionMemoryFactUncheckedCreateNestedManyWithoutSessionInput
+  requests?: Prisma.ProcessedRequestUncheckedCreateNestedManyWithoutSessionInput
 }
 
 export type SessionCreateOrConnectWithoutTurnsInput = {
@@ -658,6 +766,7 @@ export type SessionUpdateToOneWithWhereWithoutTurnsInput = {
 export type SessionUpdateWithoutTurnsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   turnNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshotVersion?: Prisma.IntFieldUpdateOperationsInput | number
   currentSceneId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currentObjective?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   summary?: Prisma.StringFieldUpdateOperationsInput | string
@@ -666,12 +775,16 @@ export type SessionUpdateWithoutTurnsInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   campaign?: Prisma.CampaignUpdateOneRequiredWithoutSessionsNestedInput
   snapshots?: Prisma.StateSnapshotUpdateManyWithoutSessionNestedInput
+  events?: Prisma.SessionEventUpdateManyWithoutSessionNestedInput
+  memory?: Prisma.SessionMemoryFactUpdateManyWithoutSessionNestedInput
+  requests?: Prisma.ProcessedRequestUpdateManyWithoutSessionNestedInput
 }
 
 export type SessionUncheckedUpdateWithoutTurnsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   campaignId?: Prisma.StringFieldUpdateOperationsInput | string
   turnNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshotVersion?: Prisma.IntFieldUpdateOperationsInput | number
   currentSceneId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currentObjective?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   summary?: Prisma.StringFieldUpdateOperationsInput | string
@@ -679,11 +792,15 @@ export type SessionUncheckedUpdateWithoutTurnsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   snapshots?: Prisma.StateSnapshotUncheckedUpdateManyWithoutSessionNestedInput
+  events?: Prisma.SessionEventUncheckedUpdateManyWithoutSessionNestedInput
+  memory?: Prisma.SessionMemoryFactUncheckedUpdateManyWithoutSessionNestedInput
+  requests?: Prisma.ProcessedRequestUncheckedUpdateManyWithoutSessionNestedInput
 }
 
-export type SessionCreateWithoutSnapshotsInput = {
+export type SessionCreateWithoutEventsInput = {
   id?: string
   turnNumber?: number
+  snapshotVersion?: number
   currentSceneId?: string | null
   currentObjective?: string | null
   summary?: string
@@ -692,12 +809,16 @@ export type SessionCreateWithoutSnapshotsInput = {
   endedAt?: Date | string | null
   campaign: Prisma.CampaignCreateNestedOneWithoutSessionsInput
   turns?: Prisma.TurnCreateNestedManyWithoutSessionInput
+  snapshots?: Prisma.StateSnapshotCreateNestedManyWithoutSessionInput
+  memory?: Prisma.SessionMemoryFactCreateNestedManyWithoutSessionInput
+  requests?: Prisma.ProcessedRequestCreateNestedManyWithoutSessionInput
 }
 
-export type SessionUncheckedCreateWithoutSnapshotsInput = {
+export type SessionUncheckedCreateWithoutEventsInput = {
   id?: string
   campaignId: string
   turnNumber?: number
+  snapshotVersion?: number
   currentSceneId?: string | null
   currentObjective?: string | null
   summary?: string
@@ -705,6 +826,261 @@ export type SessionUncheckedCreateWithoutSnapshotsInput = {
   updatedAt?: Date | string
   endedAt?: Date | string | null
   turns?: Prisma.TurnUncheckedCreateNestedManyWithoutSessionInput
+  snapshots?: Prisma.StateSnapshotUncheckedCreateNestedManyWithoutSessionInput
+  memory?: Prisma.SessionMemoryFactUncheckedCreateNestedManyWithoutSessionInput
+  requests?: Prisma.ProcessedRequestUncheckedCreateNestedManyWithoutSessionInput
+}
+
+export type SessionCreateOrConnectWithoutEventsInput = {
+  where: Prisma.SessionWhereUniqueInput
+  create: Prisma.XOR<Prisma.SessionCreateWithoutEventsInput, Prisma.SessionUncheckedCreateWithoutEventsInput>
+}
+
+export type SessionUpsertWithoutEventsInput = {
+  update: Prisma.XOR<Prisma.SessionUpdateWithoutEventsInput, Prisma.SessionUncheckedUpdateWithoutEventsInput>
+  create: Prisma.XOR<Prisma.SessionCreateWithoutEventsInput, Prisma.SessionUncheckedCreateWithoutEventsInput>
+  where?: Prisma.SessionWhereInput
+}
+
+export type SessionUpdateToOneWithWhereWithoutEventsInput = {
+  where?: Prisma.SessionWhereInput
+  data: Prisma.XOR<Prisma.SessionUpdateWithoutEventsInput, Prisma.SessionUncheckedUpdateWithoutEventsInput>
+}
+
+export type SessionUpdateWithoutEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  turnNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshotVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  currentSceneId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currentObjective?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  summary?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  campaign?: Prisma.CampaignUpdateOneRequiredWithoutSessionsNestedInput
+  turns?: Prisma.TurnUpdateManyWithoutSessionNestedInput
+  snapshots?: Prisma.StateSnapshotUpdateManyWithoutSessionNestedInput
+  memory?: Prisma.SessionMemoryFactUpdateManyWithoutSessionNestedInput
+  requests?: Prisma.ProcessedRequestUpdateManyWithoutSessionNestedInput
+}
+
+export type SessionUncheckedUpdateWithoutEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  campaignId?: Prisma.StringFieldUpdateOperationsInput | string
+  turnNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshotVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  currentSceneId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currentObjective?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  summary?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  turns?: Prisma.TurnUncheckedUpdateManyWithoutSessionNestedInput
+  snapshots?: Prisma.StateSnapshotUncheckedUpdateManyWithoutSessionNestedInput
+  memory?: Prisma.SessionMemoryFactUncheckedUpdateManyWithoutSessionNestedInput
+  requests?: Prisma.ProcessedRequestUncheckedUpdateManyWithoutSessionNestedInput
+}
+
+export type SessionCreateWithoutMemoryInput = {
+  id?: string
+  turnNumber?: number
+  snapshotVersion?: number
+  currentSceneId?: string | null
+  currentObjective?: string | null
+  summary?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  endedAt?: Date | string | null
+  campaign: Prisma.CampaignCreateNestedOneWithoutSessionsInput
+  turns?: Prisma.TurnCreateNestedManyWithoutSessionInput
+  snapshots?: Prisma.StateSnapshotCreateNestedManyWithoutSessionInput
+  events?: Prisma.SessionEventCreateNestedManyWithoutSessionInput
+  requests?: Prisma.ProcessedRequestCreateNestedManyWithoutSessionInput
+}
+
+export type SessionUncheckedCreateWithoutMemoryInput = {
+  id?: string
+  campaignId: string
+  turnNumber?: number
+  snapshotVersion?: number
+  currentSceneId?: string | null
+  currentObjective?: string | null
+  summary?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  endedAt?: Date | string | null
+  turns?: Prisma.TurnUncheckedCreateNestedManyWithoutSessionInput
+  snapshots?: Prisma.StateSnapshotUncheckedCreateNestedManyWithoutSessionInput
+  events?: Prisma.SessionEventUncheckedCreateNestedManyWithoutSessionInput
+  requests?: Prisma.ProcessedRequestUncheckedCreateNestedManyWithoutSessionInput
+}
+
+export type SessionCreateOrConnectWithoutMemoryInput = {
+  where: Prisma.SessionWhereUniqueInput
+  create: Prisma.XOR<Prisma.SessionCreateWithoutMemoryInput, Prisma.SessionUncheckedCreateWithoutMemoryInput>
+}
+
+export type SessionUpsertWithoutMemoryInput = {
+  update: Prisma.XOR<Prisma.SessionUpdateWithoutMemoryInput, Prisma.SessionUncheckedUpdateWithoutMemoryInput>
+  create: Prisma.XOR<Prisma.SessionCreateWithoutMemoryInput, Prisma.SessionUncheckedCreateWithoutMemoryInput>
+  where?: Prisma.SessionWhereInput
+}
+
+export type SessionUpdateToOneWithWhereWithoutMemoryInput = {
+  where?: Prisma.SessionWhereInput
+  data: Prisma.XOR<Prisma.SessionUpdateWithoutMemoryInput, Prisma.SessionUncheckedUpdateWithoutMemoryInput>
+}
+
+export type SessionUpdateWithoutMemoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  turnNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshotVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  currentSceneId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currentObjective?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  summary?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  campaign?: Prisma.CampaignUpdateOneRequiredWithoutSessionsNestedInput
+  turns?: Prisma.TurnUpdateManyWithoutSessionNestedInput
+  snapshots?: Prisma.StateSnapshotUpdateManyWithoutSessionNestedInput
+  events?: Prisma.SessionEventUpdateManyWithoutSessionNestedInput
+  requests?: Prisma.ProcessedRequestUpdateManyWithoutSessionNestedInput
+}
+
+export type SessionUncheckedUpdateWithoutMemoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  campaignId?: Prisma.StringFieldUpdateOperationsInput | string
+  turnNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshotVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  currentSceneId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currentObjective?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  summary?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  turns?: Prisma.TurnUncheckedUpdateManyWithoutSessionNestedInput
+  snapshots?: Prisma.StateSnapshotUncheckedUpdateManyWithoutSessionNestedInput
+  events?: Prisma.SessionEventUncheckedUpdateManyWithoutSessionNestedInput
+  requests?: Prisma.ProcessedRequestUncheckedUpdateManyWithoutSessionNestedInput
+}
+
+export type SessionCreateWithoutRequestsInput = {
+  id?: string
+  turnNumber?: number
+  snapshotVersion?: number
+  currentSceneId?: string | null
+  currentObjective?: string | null
+  summary?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  endedAt?: Date | string | null
+  campaign: Prisma.CampaignCreateNestedOneWithoutSessionsInput
+  turns?: Prisma.TurnCreateNestedManyWithoutSessionInput
+  snapshots?: Prisma.StateSnapshotCreateNestedManyWithoutSessionInput
+  events?: Prisma.SessionEventCreateNestedManyWithoutSessionInput
+  memory?: Prisma.SessionMemoryFactCreateNestedManyWithoutSessionInput
+}
+
+export type SessionUncheckedCreateWithoutRequestsInput = {
+  id?: string
+  campaignId: string
+  turnNumber?: number
+  snapshotVersion?: number
+  currentSceneId?: string | null
+  currentObjective?: string | null
+  summary?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  endedAt?: Date | string | null
+  turns?: Prisma.TurnUncheckedCreateNestedManyWithoutSessionInput
+  snapshots?: Prisma.StateSnapshotUncheckedCreateNestedManyWithoutSessionInput
+  events?: Prisma.SessionEventUncheckedCreateNestedManyWithoutSessionInput
+  memory?: Prisma.SessionMemoryFactUncheckedCreateNestedManyWithoutSessionInput
+}
+
+export type SessionCreateOrConnectWithoutRequestsInput = {
+  where: Prisma.SessionWhereUniqueInput
+  create: Prisma.XOR<Prisma.SessionCreateWithoutRequestsInput, Prisma.SessionUncheckedCreateWithoutRequestsInput>
+}
+
+export type SessionUpsertWithoutRequestsInput = {
+  update: Prisma.XOR<Prisma.SessionUpdateWithoutRequestsInput, Prisma.SessionUncheckedUpdateWithoutRequestsInput>
+  create: Prisma.XOR<Prisma.SessionCreateWithoutRequestsInput, Prisma.SessionUncheckedCreateWithoutRequestsInput>
+  where?: Prisma.SessionWhereInput
+}
+
+export type SessionUpdateToOneWithWhereWithoutRequestsInput = {
+  where?: Prisma.SessionWhereInput
+  data: Prisma.XOR<Prisma.SessionUpdateWithoutRequestsInput, Prisma.SessionUncheckedUpdateWithoutRequestsInput>
+}
+
+export type SessionUpdateWithoutRequestsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  turnNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshotVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  currentSceneId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currentObjective?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  summary?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  campaign?: Prisma.CampaignUpdateOneRequiredWithoutSessionsNestedInput
+  turns?: Prisma.TurnUpdateManyWithoutSessionNestedInput
+  snapshots?: Prisma.StateSnapshotUpdateManyWithoutSessionNestedInput
+  events?: Prisma.SessionEventUpdateManyWithoutSessionNestedInput
+  memory?: Prisma.SessionMemoryFactUpdateManyWithoutSessionNestedInput
+}
+
+export type SessionUncheckedUpdateWithoutRequestsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  campaignId?: Prisma.StringFieldUpdateOperationsInput | string
+  turnNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshotVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  currentSceneId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currentObjective?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  summary?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  turns?: Prisma.TurnUncheckedUpdateManyWithoutSessionNestedInput
+  snapshots?: Prisma.StateSnapshotUncheckedUpdateManyWithoutSessionNestedInput
+  events?: Prisma.SessionEventUncheckedUpdateManyWithoutSessionNestedInput
+  memory?: Prisma.SessionMemoryFactUncheckedUpdateManyWithoutSessionNestedInput
+}
+
+export type SessionCreateWithoutSnapshotsInput = {
+  id?: string
+  turnNumber?: number
+  snapshotVersion?: number
+  currentSceneId?: string | null
+  currentObjective?: string | null
+  summary?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  endedAt?: Date | string | null
+  campaign: Prisma.CampaignCreateNestedOneWithoutSessionsInput
+  turns?: Prisma.TurnCreateNestedManyWithoutSessionInput
+  events?: Prisma.SessionEventCreateNestedManyWithoutSessionInput
+  memory?: Prisma.SessionMemoryFactCreateNestedManyWithoutSessionInput
+  requests?: Prisma.ProcessedRequestCreateNestedManyWithoutSessionInput
+}
+
+export type SessionUncheckedCreateWithoutSnapshotsInput = {
+  id?: string
+  campaignId: string
+  turnNumber?: number
+  snapshotVersion?: number
+  currentSceneId?: string | null
+  currentObjective?: string | null
+  summary?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  endedAt?: Date | string | null
+  turns?: Prisma.TurnUncheckedCreateNestedManyWithoutSessionInput
+  events?: Prisma.SessionEventUncheckedCreateNestedManyWithoutSessionInput
+  memory?: Prisma.SessionMemoryFactUncheckedCreateNestedManyWithoutSessionInput
+  requests?: Prisma.ProcessedRequestUncheckedCreateNestedManyWithoutSessionInput
 }
 
 export type SessionCreateOrConnectWithoutSnapshotsInput = {
@@ -726,6 +1102,7 @@ export type SessionUpdateToOneWithWhereWithoutSnapshotsInput = {
 export type SessionUpdateWithoutSnapshotsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   turnNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshotVersion?: Prisma.IntFieldUpdateOperationsInput | number
   currentSceneId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currentObjective?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   summary?: Prisma.StringFieldUpdateOperationsInput | string
@@ -734,12 +1111,16 @@ export type SessionUpdateWithoutSnapshotsInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   campaign?: Prisma.CampaignUpdateOneRequiredWithoutSessionsNestedInput
   turns?: Prisma.TurnUpdateManyWithoutSessionNestedInput
+  events?: Prisma.SessionEventUpdateManyWithoutSessionNestedInput
+  memory?: Prisma.SessionMemoryFactUpdateManyWithoutSessionNestedInput
+  requests?: Prisma.ProcessedRequestUpdateManyWithoutSessionNestedInput
 }
 
 export type SessionUncheckedUpdateWithoutSnapshotsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   campaignId?: Prisma.StringFieldUpdateOperationsInput | string
   turnNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshotVersion?: Prisma.IntFieldUpdateOperationsInput | number
   currentSceneId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currentObjective?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   summary?: Prisma.StringFieldUpdateOperationsInput | string
@@ -747,11 +1128,15 @@ export type SessionUncheckedUpdateWithoutSnapshotsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   turns?: Prisma.TurnUncheckedUpdateManyWithoutSessionNestedInput
+  events?: Prisma.SessionEventUncheckedUpdateManyWithoutSessionNestedInput
+  memory?: Prisma.SessionMemoryFactUncheckedUpdateManyWithoutSessionNestedInput
+  requests?: Prisma.ProcessedRequestUncheckedUpdateManyWithoutSessionNestedInput
 }
 
 export type SessionCreateManyCampaignInput = {
   id?: string
   turnNumber?: number
+  snapshotVersion?: number
   currentSceneId?: string | null
   currentObjective?: string | null
   summary?: string
@@ -763,6 +1148,7 @@ export type SessionCreateManyCampaignInput = {
 export type SessionUpdateWithoutCampaignInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   turnNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshotVersion?: Prisma.IntFieldUpdateOperationsInput | number
   currentSceneId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currentObjective?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   summary?: Prisma.StringFieldUpdateOperationsInput | string
@@ -771,11 +1157,15 @@ export type SessionUpdateWithoutCampaignInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   turns?: Prisma.TurnUpdateManyWithoutSessionNestedInput
   snapshots?: Prisma.StateSnapshotUpdateManyWithoutSessionNestedInput
+  events?: Prisma.SessionEventUpdateManyWithoutSessionNestedInput
+  memory?: Prisma.SessionMemoryFactUpdateManyWithoutSessionNestedInput
+  requests?: Prisma.ProcessedRequestUpdateManyWithoutSessionNestedInput
 }
 
 export type SessionUncheckedUpdateWithoutCampaignInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   turnNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshotVersion?: Prisma.IntFieldUpdateOperationsInput | number
   currentSceneId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currentObjective?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   summary?: Prisma.StringFieldUpdateOperationsInput | string
@@ -784,11 +1174,15 @@ export type SessionUncheckedUpdateWithoutCampaignInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   turns?: Prisma.TurnUncheckedUpdateManyWithoutSessionNestedInput
   snapshots?: Prisma.StateSnapshotUncheckedUpdateManyWithoutSessionNestedInput
+  events?: Prisma.SessionEventUncheckedUpdateManyWithoutSessionNestedInput
+  memory?: Prisma.SessionMemoryFactUncheckedUpdateManyWithoutSessionNestedInput
+  requests?: Prisma.ProcessedRequestUncheckedUpdateManyWithoutSessionNestedInput
 }
 
 export type SessionUncheckedUpdateManyWithoutCampaignInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   turnNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshotVersion?: Prisma.IntFieldUpdateOperationsInput | number
   currentSceneId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currentObjective?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   summary?: Prisma.StringFieldUpdateOperationsInput | string
@@ -805,11 +1199,17 @@ export type SessionUncheckedUpdateManyWithoutCampaignInput = {
 export type SessionCountOutputType = {
   turns: number
   snapshots: number
+  events: number
+  memory: number
+  requests: number
 }
 
 export type SessionCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   turns?: boolean | SessionCountOutputTypeCountTurnsArgs
   snapshots?: boolean | SessionCountOutputTypeCountSnapshotsArgs
+  events?: boolean | SessionCountOutputTypeCountEventsArgs
+  memory?: boolean | SessionCountOutputTypeCountMemoryArgs
+  requests?: boolean | SessionCountOutputTypeCountRequestsArgs
 }
 
 /**
@@ -836,11 +1236,33 @@ export type SessionCountOutputTypeCountSnapshotsArgs<ExtArgs extends runtime.Typ
   where?: Prisma.StateSnapshotWhereInput
 }
 
+/**
+ * SessionCountOutputType without action
+ */
+export type SessionCountOutputTypeCountEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SessionEventWhereInput
+}
+
+/**
+ * SessionCountOutputType without action
+ */
+export type SessionCountOutputTypeCountMemoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SessionMemoryFactWhereInput
+}
+
+/**
+ * SessionCountOutputType without action
+ */
+export type SessionCountOutputTypeCountRequestsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ProcessedRequestWhereInput
+}
+
 
 export type SessionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   campaignId?: boolean
   turnNumber?: boolean
+  snapshotVersion?: boolean
   currentSceneId?: boolean
   currentObjective?: boolean
   summary?: boolean
@@ -850,6 +1272,9 @@ export type SessionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   campaign?: boolean | Prisma.CampaignDefaultArgs<ExtArgs>
   turns?: boolean | Prisma.Session$turnsArgs<ExtArgs>
   snapshots?: boolean | Prisma.Session$snapshotsArgs<ExtArgs>
+  events?: boolean | Prisma.Session$eventsArgs<ExtArgs>
+  memory?: boolean | Prisma.Session$memoryArgs<ExtArgs>
+  requests?: boolean | Prisma.Session$requestsArgs<ExtArgs>
   _count?: boolean | Prisma.SessionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["session"]>
 
@@ -857,6 +1282,7 @@ export type SessionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   id?: boolean
   campaignId?: boolean
   turnNumber?: boolean
+  snapshotVersion?: boolean
   currentSceneId?: boolean
   currentObjective?: boolean
   summary?: boolean
@@ -870,6 +1296,7 @@ export type SessionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   id?: boolean
   campaignId?: boolean
   turnNumber?: boolean
+  snapshotVersion?: boolean
   currentSceneId?: boolean
   currentObjective?: boolean
   summary?: boolean
@@ -883,6 +1310,7 @@ export type SessionSelectScalar = {
   id?: boolean
   campaignId?: boolean
   turnNumber?: boolean
+  snapshotVersion?: boolean
   currentSceneId?: boolean
   currentObjective?: boolean
   summary?: boolean
@@ -891,11 +1319,14 @@ export type SessionSelectScalar = {
   endedAt?: boolean
 }
 
-export type SessionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "campaignId" | "turnNumber" | "currentSceneId" | "currentObjective" | "summary" | "createdAt" | "updatedAt" | "endedAt", ExtArgs["result"]["session"]>
+export type SessionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "campaignId" | "turnNumber" | "snapshotVersion" | "currentSceneId" | "currentObjective" | "summary" | "createdAt" | "updatedAt" | "endedAt", ExtArgs["result"]["session"]>
 export type SessionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   campaign?: boolean | Prisma.CampaignDefaultArgs<ExtArgs>
   turns?: boolean | Prisma.Session$turnsArgs<ExtArgs>
   snapshots?: boolean | Prisma.Session$snapshotsArgs<ExtArgs>
+  events?: boolean | Prisma.Session$eventsArgs<ExtArgs>
+  memory?: boolean | Prisma.Session$memoryArgs<ExtArgs>
+  requests?: boolean | Prisma.Session$requestsArgs<ExtArgs>
   _count?: boolean | Prisma.SessionCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type SessionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -911,11 +1342,15 @@ export type $SessionPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     campaign: Prisma.$CampaignPayload<ExtArgs>
     turns: Prisma.$TurnPayload<ExtArgs>[]
     snapshots: Prisma.$StateSnapshotPayload<ExtArgs>[]
+    events: Prisma.$SessionEventPayload<ExtArgs>[]
+    memory: Prisma.$SessionMemoryFactPayload<ExtArgs>[]
+    requests: Prisma.$ProcessedRequestPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     campaignId: string
     turnNumber: number
+    snapshotVersion: number
     currentSceneId: string | null
     currentObjective: string | null
     summary: string
@@ -1319,6 +1754,9 @@ export interface Prisma__SessionClient<T, Null = never, ExtArgs extends runtime.
   campaign<T extends Prisma.CampaignDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CampaignDefaultArgs<ExtArgs>>): Prisma.Prisma__CampaignClient<runtime.Types.Result.GetResult<Prisma.$CampaignPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   turns<T extends Prisma.Session$turnsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Session$turnsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TurnPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   snapshots<T extends Prisma.Session$snapshotsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Session$snapshotsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StateSnapshotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  events<T extends Prisma.Session$eventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Session$eventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  memory<T extends Prisma.Session$memoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Session$memoryArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionMemoryFactPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  requests<T extends Prisma.Session$requestsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Session$requestsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProcessedRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1351,6 +1789,7 @@ export interface SessionFieldRefs {
   readonly id: Prisma.FieldRef<"Session", 'String'>
   readonly campaignId: Prisma.FieldRef<"Session", 'String'>
   readonly turnNumber: Prisma.FieldRef<"Session", 'Int'>
+  readonly snapshotVersion: Prisma.FieldRef<"Session", 'Int'>
   readonly currentSceneId: Prisma.FieldRef<"Session", 'String'>
   readonly currentObjective: Prisma.FieldRef<"Session", 'String'>
   readonly summary: Prisma.FieldRef<"Session", 'String'>
@@ -1803,6 +2242,78 @@ export type Session$snapshotsArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.StateSnapshotScalarFieldEnum | Prisma.StateSnapshotScalarFieldEnum[]
+}
+
+/**
+ * Session.events
+ */
+export type Session$eventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SessionEvent
+   */
+  select?: Prisma.SessionEventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SessionEvent
+   */
+  omit?: Prisma.SessionEventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SessionEventInclude<ExtArgs> | null
+  where?: Prisma.SessionEventWhereInput
+  orderBy?: Prisma.SessionEventOrderByWithRelationInput | Prisma.SessionEventOrderByWithRelationInput[]
+  cursor?: Prisma.SessionEventWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SessionEventScalarFieldEnum | Prisma.SessionEventScalarFieldEnum[]
+}
+
+/**
+ * Session.memory
+ */
+export type Session$memoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SessionMemoryFact
+   */
+  select?: Prisma.SessionMemoryFactSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SessionMemoryFact
+   */
+  omit?: Prisma.SessionMemoryFactOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SessionMemoryFactInclude<ExtArgs> | null
+  where?: Prisma.SessionMemoryFactWhereInput
+  orderBy?: Prisma.SessionMemoryFactOrderByWithRelationInput | Prisma.SessionMemoryFactOrderByWithRelationInput[]
+  cursor?: Prisma.SessionMemoryFactWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SessionMemoryFactScalarFieldEnum | Prisma.SessionMemoryFactScalarFieldEnum[]
+}
+
+/**
+ * Session.requests
+ */
+export type Session$requestsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProcessedRequest
+   */
+  select?: Prisma.ProcessedRequestSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProcessedRequest
+   */
+  omit?: Prisma.ProcessedRequestOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProcessedRequestInclude<ExtArgs> | null
+  where?: Prisma.ProcessedRequestWhereInput
+  orderBy?: Prisma.ProcessedRequestOrderByWithRelationInput | Prisma.ProcessedRequestOrderByWithRelationInput[]
+  cursor?: Prisma.ProcessedRequestWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ProcessedRequestScalarFieldEnum | Prisma.ProcessedRequestScalarFieldEnum[]
 }
 
 /**
