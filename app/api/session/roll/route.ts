@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db/prisma";
 import { getOrSetAnonUserId } from "@/lib/auth/anonUser";
+import { classifyD20, clampDc } from "@/lib/game/state/rollPolicy";
 
 export const runtime = "nodejs";
 
@@ -15,6 +16,7 @@ export async function POST(req: Request) {
       sessionId?: string;
       reason?: string;
       promptKey?: string;
+      dc?: number;
       idempotencyKey?: string;
     };
 
@@ -40,11 +42,15 @@ export async function POST(req: Request) {
     if (!session) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
     const value = rollD20();
+    const dc = clampDc(body.dc ?? 10);
+    const band = classifyD20(value);
     const payload = {
       rollType: "d20" as const,
       value,
       reason: body.reason,
       promptKey: body.promptKey,
+      dc,
+      band,
     };
 
     const nextTurnIndex = (session.turns[0]?.turnIndex ?? 0) + 1;

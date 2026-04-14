@@ -19,6 +19,8 @@ type TurnRequest = {
     promptKey: string;
     reason: string;
     value: number;
+    dc?: number;
+    band?: "critical_fail" | "fail" | "success" | "moderate_success" | "critical_success";
   };
 };
 

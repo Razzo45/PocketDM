@@ -10,7 +10,9 @@ const D20Die = dynamic(
 export function DiceRollCard(props: {
   reason: string;
   stakes: string;
+  dc: number;
   value?: number;
+  band?: "critical_fail" | "fail" | "success" | "moderate_success" | "critical_success";
   isRolling: boolean;
   isResolved: boolean;
   lockedMessage?: string;
@@ -20,10 +22,10 @@ export function DiceRollCard(props: {
     <div className="mx-4 mb-3 rounded-xl border border-violet-200 bg-violet-50 p-3 text-sm dark:border-violet-900/50 dark:bg-violet-950/30">
       <div className="font-semibold text-violet-900 dark:text-violet-100">Roll Required: d20</div>
       <div className="mt-1 text-violet-800 dark:text-violet-200">{props.reason}</div>
-      <div className="text-xs text-violet-700 dark:text-violet-300">Stakes: {props.stakes}</div>
+      <div className="text-xs text-violet-700 dark:text-violet-300">Stakes: {props.stakes} • Target: {props.dc}+</div>
 
       <div className="mt-3 overflow-hidden rounded-lg border border-violet-200 bg-white dark:border-violet-900/60 dark:bg-zinc-950">
-        <D20Die value={props.value ?? null} rolling={props.isRolling} />
+        <D20Die value={props.value ?? null} rolling={props.isRolling} band={props.band} />
       </div>
 
       {typeof props.value === "number" ? (

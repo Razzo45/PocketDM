@@ -13,7 +13,7 @@ function bandLabel(band: string | null | undefined): string {
   if (!band) return "";
   if (band === "critical_success") return "Critical success";
   if (band === "success") return "Success";
-  if (band === "mixed") return "Mixed result";
+  if (band === "moderate_success") return "Moderate success";
   if (band === "fail") return "Fail";
   if (band === "critical_fail") return "Critical fail";
   return band.replace(/_/g, " ");
@@ -23,7 +23,7 @@ function bandColor(band: string | null | undefined): string {
   if (!band) return "text-white/70";
   if (band === "critical_success") return "text-emerald-300";
   if (band === "success") return "text-green-300";
-  if (band === "mixed") return "text-amber-200";
+  if (band === "moderate_success") return "text-amber-200";
   if (band === "fail") return "text-orange-300";
   if (band === "critical_fail") return "text-red-400";
   return "text-white/70";
@@ -44,12 +44,16 @@ export function D20Die({ value, rolling, band, onRollVisualComplete }: Props) {
     try {
       const DiceBox = (await import("@3d-dice/dice-box-threejs")).default;
       const box = new DiceBox(containerRef.current, {
+        theme_surface: "green-felt",
+        theme_colorset: "white",
+        theme_material: "glass",
+        theme_texture: "",
         gravity_multiplier: 600,
         light_intensity: 0.9,
         shadows: true,
         sounds: false,
-        strength: 2,
-        baseScale: 100,
+        strength: 1.8,
+        baseScale: 110,
         onRollComplete: () => {},
       });
 

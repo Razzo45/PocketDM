@@ -75,6 +75,7 @@ export const RunDmTurnOutputSchema = z.object({
         reason: z.string().min(1),
         stakes: z.string().min(1),
         promptKey: z.string().min(1),
+        dc: z.number().int().min(5).max(20),
       })
       .optional(),
   ),

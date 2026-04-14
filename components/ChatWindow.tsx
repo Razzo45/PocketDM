@@ -9,7 +9,7 @@ type Turn = {
   content: string;
   metadataJson?: { rollPrompt?: RollPrompt };
 };
-type RollPrompt = { kind: "d20"; reason: string; stakes: string; promptKey: string; sourceTurnIndex?: number };
+type RollPrompt = { kind: "d20"; reason: string; stakes: string; promptKey: string; dc: number; sourceTurnIndex?: number };
 
 export function ChatWindow(props: {
   sessionId: string;
@@ -40,7 +40,16 @@ export function ChatWindow(props: {
     return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
   }
 
-  async function send(payload?: { text?: string; rollContext?: { promptKey: string; reason: string; value: number } }) {
+  async function send(payload?: {
+    text?: string;
+    rollContext?: {
+      promptKey: string;
+      reason: string;
+      value: number;
+      dc?: number;
+      band?: "critical_fail" | "fail" | "success" | "moderate_success" | "critical_success";
+    };
+  }) {
     const text = (payload?.text ?? message).trim();
     if (!text) return;
 
@@ -93,7 +102,15 @@ export function ChatWindow(props: {
     }
   }
 
-  async function sendHiddenRollContext(payload: { rollContext: { promptKey: string; reason: string; value: number } }) {
+  async function sendHiddenRollContext(payload: {
+    rollContext: {
+      promptKey: string;
+      reason: string;
+      value: number;
+      dc?: number;
+      band?: "critical_fail" | "fail" | "success" | "moderate_success" | "critical_success";
+    };
+  }) {
     setIsSending(true);
     setError(null);
     try {
@@ -147,6 +164,7 @@ export function ChatWindow(props: {
           sessionId: props.sessionId,
           reason: rollPrompt.reason,
           promptKey: rollPrompt.promptKey,
+          dc: rollPrompt.dc,
           idempotencyKey: makeIdempotencyKey("roll"),
         }),
       });
@@ -161,6 +179,8 @@ export function ChatWindow(props: {
           promptKey: rollPrompt.promptKey,
           reason: rollPrompt.reason,
           value: rollJson.value,
+          dc: rollJson.dc,
+          band: rollJson.band,
         },
       });
     } catch (e: any) {
@@ -195,8 +215,22 @@ export function ChatWindow(props: {
                   <DiceRollCard
                     reason={rollPrompt.reason}
                     stakes={rollPrompt.stakes}
+                    dc={rollPrompt.dc}
                     isRolling={isRolling}
                     value={rollValue}
+                    band={
+                      rollValue === 1
+                        ? "critical_fail"
+                        : rollValue && rollValue <= 9
+                          ? "fail"
+                          : rollValue === 10
+                            ? "success"
+                            : rollValue && rollValue <= 19
+                              ? "moderate_success"
+                              : rollValue === 20
+                                ? "critical_success"
+                                : undefined
+                    }
                     isResolved={typeof rollValue === "number" && !isRolling}
                     lockedMessage={rollLocked && typeof rollValue === "number" ? `Roll locked (${rollValue}). Narrating outcome...` : undefined}
                     onRoll={() => void resolveRoll()}
