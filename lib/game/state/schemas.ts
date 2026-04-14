@@ -67,14 +67,17 @@ export const RunDmTurnOutputSchema = z.object({
     npcIds: z.array(z.string()).default([]),
     questIds: z.array(z.string()).default([]),
   }),
-  rollPrompt: z
-    .object({
-      kind: z.literal("d20"),
-      reason: z.string().min(1),
-      stakes: z.string().min(1),
-      promptKey: z.string().min(1),
-    })
-    .optional(),
+  rollPrompt: z.preprocess(
+    (value) => (value === null ? undefined : value),
+    z
+      .object({
+        kind: z.literal("d20"),
+        reason: z.string().min(1),
+        stakes: z.string().min(1),
+        promptKey: z.string().min(1),
+      })
+      .optional(),
+  ),
 });
 
 export type RunDmTurnOutput = z.infer<typeof RunDmTurnOutputSchema>;

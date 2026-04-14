@@ -13,6 +13,7 @@ export const runtime = "nodejs";
 type TurnRequest = {
   sessionId?: string;
   playerMessage?: string;
+  hiddenContext?: string;
   idempotencyKey?: string;
   rollContext?: {
     promptKey: string;
@@ -26,8 +27,10 @@ export async function POST(req: Request) {
     const userId = await getOrSetAnonUserId();
     const body = (await req.json()) as TurnRequest;
     if (!body.sessionId) return NextResponse.json({ error: "Missing sessionId" }, { status: 400 });
-    if (!body.playerMessage || !body.playerMessage.trim())
-      return NextResponse.json({ error: "Missing playerMessage" }, { status: 400 });
+    const playerMessage = body.playerMessage?.trim() ?? "";
+    const hiddenContext = body.hiddenContext?.trim() ?? "";
+    const effectivePlayerInput = playerMessage || hiddenContext;
+    if (!effectivePlayerInput) return NextResponse.json({ error: "Missing playerMessage" }, { status: 400 });
 
     if (body.idempotencyKey) {
       const cached = await prisma.processedRequest.findFirst({
@@ -84,15 +87,17 @@ export async function POST(req: Request) {
     });
 
     const nextTurnIndex = (session.turns.at(-1)?.turnIndex ?? 0) + 1;
-    await prisma.turn.create({
-      data: {
-        sessionId: session.id,
-        turnIndex: nextTurnIndex,
-        role: "player",
-        content: body.playerMessage.trim(),
-        metadataJson: body.rollContext ? { rollContext: body.rollContext } : undefined,
-      },
-    });
+    if (playerMessage) {
+      await prisma.turn.create({
+        data: {
+          sessionId: session.id,
+          turnIndex: nextTurnIndex,
+          role: "player",
+          content: playerMessage,
+          metadataJson: body.rollContext ? { rollContext: body.rollContext } : undefined,
+        },
+      });
+    }
 
     const activeQuests = session.campaign.quests.map((q) => ({
       id: q.id,
@@ -120,7 +125,7 @@ export async function POST(req: Request) {
         description: l.description,
       })),
       activeQuests: activeQuests.slice(0, 5),
-      recentTurns: [...context.recentTurns, { role: "player", content: body.playerMessage.trim() }],
+      recentTurns: [...context.recentTurns, { role: "player", content: effectivePlayerInput }],
       state: context.state,
       pinnedFacts: context.pinnedFacts,
       rollContext: body.rollContext,
@@ -146,7 +151,7 @@ export async function POST(req: Request) {
       system: session.campaign.system,
       worldSummary: session.campaign.world.summary,
       state: context.state,
-      lastPlayerMessage: body.playerMessage.trim(),
+      lastPlayerMessage: effectivePlayerInput,
       lastDmMessage: dm.dmMessage,
     });
 

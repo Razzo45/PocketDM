@@ -2,8 +2,8 @@
 
 import dynamic from "next/dynamic";
 
-const ThreeDiceRoll = dynamic(
-  () => import("./dice/ThreeDiceRoll").then((m) => m.ThreeDiceRoll),
+const D20Die = dynamic(
+  () => import("./dice/D20Die").then((m) => m.D20Die),
   { ssr: false },
 );
 
@@ -23,8 +23,15 @@ export function DiceRollCard(props: {
       <div className="text-xs text-violet-700 dark:text-violet-300">Stakes: {props.stakes}</div>
 
       <div className="mt-3 overflow-hidden rounded-lg border border-violet-200 bg-white dark:border-violet-900/60 dark:bg-zinc-950">
-        <ThreeDiceRoll isRolling={props.isRolling} targetValue={props.value} />
+        <D20Die value={props.value ?? null} rolling={props.isRolling} />
       </div>
+
+      {typeof props.value === "number" ? (
+        <div className="mt-2 rounded-lg border border-violet-200 bg-violet-100 px-3 py-2 text-center dark:border-violet-800 dark:bg-violet-900/40">
+          <div className="text-[11px] uppercase tracking-wide text-violet-700 dark:text-violet-300">D20 Result</div>
+          <div className="text-2xl font-bold text-violet-900 dark:text-violet-100">{props.value}</div>
+        </div>
+      ) : null}
 
       <div className="mt-3 flex items-center gap-2">
         <button
@@ -35,7 +42,6 @@ export function DiceRollCard(props: {
         >
           {props.isRolling ? "Rolling..." : props.isResolved ? "Resolved" : "Roll d20"}
         </button>
-        {props.value ? <span className="text-xs font-medium text-violet-800 dark:text-violet-200">Result: {props.value}</span> : null}
         {props.lockedMessage ? <span className="text-xs text-violet-700 dark:text-violet-300">{props.lockedMessage}</span> : null}
       </div>
     </div>

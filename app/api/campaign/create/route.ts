@@ -104,10 +104,7 @@ export async function POST(req: Request) {
             {
               turnIndex: 0,
               role: "dm",
-              content:
-                packet.openingScene.text +
-                "\n\nChoices: " +
-                packet.openingScene.impliedChoices.map((c) => `- ${c}`).join("\n"),
+              content: packet.openingScene.text + "\n\nWhat do you do?",
             },
           ],
         },

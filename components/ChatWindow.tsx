@@ -93,6 +93,48 @@ export function ChatWindow(props: {
     }
   }
 
+  async function sendHiddenRollContext(payload: { rollContext: { promptKey: string; reason: string; value: number } }) {
+    setIsSending(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/session/turn", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          sessionId: props.sessionId,
+          hiddenContext: `Resolved d20 roll for "${payload.rollContext.reason}" with result ${payload.rollContext.value}.`,
+          rollContext: payload.rollContext,
+          idempotencyKey: makeIdempotencyKey("turn-hidden"),
+        }),
+      });
+      const json = (await res.json()) as any;
+      if (!res.ok) throw new Error(json?.error ?? "Turn failed");
+
+      const dmTurn: Turn = {
+        turnIndex: (turns.at(-1)?.turnIndex ?? 0) + 1,
+        role: "dm",
+        content: json.dmMessage,
+        metadataJson: json.rollPrompt ? { rollPrompt: json.rollPrompt } : undefined,
+      };
+      setTurns((t) => [...t, dmTurn]);
+      setRollPrompt(
+        json.rollPrompt
+          ? ({
+              ...(json.rollPrompt as RollPrompt),
+              sourceTurnIndex: json.rollPromptTurnIndex ?? dmTurn.turnIndex,
+            } as RollPrompt)
+          : null,
+      );
+      setRollValue(undefined);
+      setRollLocked(false);
+      props.onAfterTurn?.({ state: json.state, summary: json.summary });
+    } catch (e: any) {
+      setError(e?.message ?? "Unknown error");
+    } finally {
+      setIsSending(false);
+    }
+  }
+
   async function resolveRoll() {
     if (!rollPrompt || isRolling) return;
     setIsRolling(true);
@@ -114,8 +156,7 @@ export function ChatWindow(props: {
       setRollLocked(true);
       setIsRolling(false);
 
-      await send({
-        text: `I rolled a ${rollJson.value} on the d20 for: ${rollPrompt.reason}.`,
+      await sendHiddenRollContext({
         rollContext: {
           promptKey: rollPrompt.promptKey,
           reason: rollPrompt.reason,
@@ -135,7 +176,9 @@ export function ChatWindow(props: {
     <div className="flex h-full flex-col rounded-2xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950">
       <div className="flex-1 overflow-auto p-4">
         <div className="flex flex-col gap-3">
-          {turns.map((t) => (
+          {turns
+            .filter((turn) => turn.role !== "system")
+            .map((t) => (
             <div key={t.turnIndex} className="contents">
               <div
                 className={[
@@ -155,7 +198,7 @@ export function ChatWindow(props: {
                     isRolling={isRolling}
                     value={rollValue}
                     isResolved={typeof rollValue === "number" && !isRolling}
-                    lockedMessage={rollLocked ? "Roll locked. Narrating outcome..." : undefined}
+                    lockedMessage={rollLocked && typeof rollValue === "number" ? `Roll locked (${rollValue}). Narrating outcome...` : undefined}
                     onRoll={() => void resolveRoll()}
                   />
                 </div>
